@@ -1,0 +1,286 @@
+import React from 'react';
+import ThemeToggle from './components/ThemeToggle';
+import GitHubHeatmap from './components/GitHubHeatmap';
+import ProjectCard from './components/ProjectCard';
+import { Project, SocialLink } from './types';
+import { Github, MapPin, Mail, ChevronDown, Layers, Cpu } from 'lucide-react';
+
+// --- Icons (SVG Components for local usage) ---
+const GithubIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+  </svg>
+);
+
+const GiteeIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-4.15a.592.592 0 0 1-.592-.592v-1.482a.593.593 0 0 1 .593-.592h6.815c.327 0 .593.265.593.592v3.408a4 4 0 0 1-4 4H5.926a.593.593 0 0 1-.593-.593V9.778a4.444 4.444 0 0 1 4.445-4.444h8.296Z" />
+  </svg>
+);
+
+const WechatIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+  </svg>
+);
+
+const WeiboIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/>
+  </svg>
+);
+
+const XiaoHongShuIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M22.405 9.879c.002.016.01.02.07.019h.725a.797.797 0 0 0 .78-.972.794.794 0 0 0-.884-.618.795.795 0 0 0-.692.794c0 .101-.002.666.001.777zm-11.509 4.808c-.203.001-1.353.004-1.685.003a2.528 2.528 0 0 1-.766-.126.025.025 0 0 0-.03.014L7.7 16.127a.025.025 0 0 0 .01.032c.111.06.336.124.495.124.66.01 1.32.002 1.981 0 .01 0 .02-.006.023-.015l.712-1.545a.025.025 0 0 0-.024-.036zM.477 9.91c-.071 0-.076.002-.076.01a.834.834 0 0 0-.01.08c-.027.397-.038.495-.234 3.06-.012.24-.034.389-.135.607-.026.057-.033.042.003.112.046.092.681 1.523.787 1.74.008.015.011.02.017.02.008 0 .033-.026.047-.044.147-.187.268-.391.371-.606.306-.635.44-1.325.486-1.706.014-.11.021-.22.03-.33l.204-2.616.022-.293c.003-.029 0-.033-.03-.034zm7.203 3.757a1.427 1.427 0 0 1-.135-.607c-.004-.084-.031-.39-.235-3.06a.443.443 0 0 0-.01-.082c-.004-.011-.052-.008-.076-.008h-1.48c-.03.001-.034.005-.03.034l.021.293c.076.982.153 1.964.233 2.946.05.4.186 1.085.487 1.706.103.215.223.419.37.606.015.018.037.051.048.049.02-.003.742-1.642.804-1.765.036-.07.03-.055.003-.112zm3.861-.913h-.872a.126.126 0 0 1-.116-.178l1.178-2.625a.025.025 0 0 0-.023-.035l-1.318-.003a.148.148 0 0 1-.135-.21l.876-1.954a.025.025 0 0 0-.023-.035h-1.56c-.01 0-.02.006-.024.015l-.926 2.068c-.085.169-.314.634-.399.938a.534.534 0 0 0-.02.191.46.46 0 0 0 .23.378.981.981 0 0 0 .46.119h.59c.041 0-.688 1.482-.834 1.972a.53.53 0 0 0-.023.172.465.465 0 0 0 .23.398c.15.092.342.12.475.12l1.66-.001c.01 0 .02-.006.023-.015l.575-1.28a.025.025 0 0 0-.024-.035zm-6.93-4.937H3.1a.032.032 0 0 0-.034.033c0 1.048-.01 2.795-.01 6.829 0 .288-.269.262-.28.262h-.74c-.04.001-.044.004-.04.047.001.037.465 1.064.555 1.263.01.02.03.033.051.033.157.003.767.009.938-.014.153-.02.3-.06.438-.132.3-.156.49-.419.595-.765.052-.172.075-.353.075-.533.002-2.33 0-4.66-.007-6.991a.032.032 0 0 0-.032-.032zm11.784 6.896c0-.014-.01-.021-.024-.022h-1.465c-.048-.001-.049-.002-.05-.049v-4.66c0-.072-.005-.07.07-.07h.863c.08 0 .075.004.075-.074V8.393c0-.082.006-.076-.08-.076h-3.5c-.064 0-.075-.006-.075.073v1.445c0 .083-.006.077.08.077h.854c.075 0 .07-.004.07.07v4.624c0 .095.008.084-.085.084-.37 0-1.11-.002-1.304 0-.048.001-.06.03-.06.03l-.697 1.519s-.014.025-.008.036c.006.01.013.008.058.008 1.748.003 3.495.002 5.243.002.03-.001.034-.006.035-.033v-1.539zm4.177-3.43c0 .013-.007.023-.02.024-.346.006-.692.004-1.037.004-.014-.002-.022-.01-.022-.024-.005-.434-.007-.869-.01-1.303 0-.072-.006-.071.07-.07l.733-.003c.041 0 .081.002.12.015.093.025.16.107.165.204.006.431.002 1.153.001 1.153zm2.67.244a1.953 1.953 0 0 0-.883-.222h-.18c-.04-.001-.04-.003-.042-.04V10.21c0-.132-.007-.263-.025-.394a1.823 1.823 0 0 0-.153-.53 1.533 1.533 0 0 0-.677-.71 2.167 2.167 0 0 0-1-.258c-.153-.003-.567 0-.72 0-.07 0-.068.004-.068-.065V7.76c0-.031-.01-.041-.046-.039H17.93s-.016 0-.023.007c-.006.006-.008.012-.008.023v.546c-.008.036-.057.015-.082.022h-.95c-.022.002-.028.008-.03.032v1.481c0 .09-.004.082.082.082h.913c.082 0 .072.128.072.128V11.19s.003.117-.06.117h-1.482c-.068 0-.06.082-.06.082v1.445s-.01.068.064.068h1.457c.082 0 .076-.006.076.079v3.225c0 .088-.007.081.082.081h1.43c.09 0 .082.007.082-.08v-3.27c0-.029.006-.035.033-.035l2.323-.003c.098 0 .191.02.28.061a.46.46 0 0 1 .274.407c.008.395.003.79.003 1.185 0 .259-.107.367-.33.367h-1.218c-.023.002-.029.008-.028.033.184.437.374.871.57 1.303a.045.045 0 0 0 .04.026c.17.005.34.002.51.003.15-.002.517.004.666-.01a2.03 2.03 0 0 0 .408-.075c.59-.18.975-.698.976-1.313v-1.981c0-.128-.01-.254-.034-.38 0 .078-.029-.641-.724-.998z" />
+  </svg>
+);
+
+// --- Data ---
+
+const projects: Project[] = [
+  {
+    id: '1',
+    title: '所订 (SuoDing)',
+    description: '一款用于管理个人订阅服务的微信小程序。帮助用户追踪扣费周期，可视化支出统计，并接收续费提醒。',
+    tags: ['微信小程序', 'JavaScript', '云开发', 'UI/UX'],
+    icon: '📅',
+    platform: 'mobile',
+    year: '2023'
+  },
+  {
+    id: '2',
+    title: '拾碎 (LifeBits)',
+    description: '一款 Android 应用，用于离线内容收集。允许用户保存其他应用中的片段，并在本地创建包含文本、图片和录音的个人备忘录。',
+    tags: ['Android', 'Kotlin', 'Jetpack Compose', '本地数据库'],
+    icon: '🧩',
+    platform: 'mobile',
+    year: '2023'
+  },
+  {
+    id: '3',
+    title: 'CtrlCV',
+    description: '基于 Qt 构建的 Windows 轻量级剪贴板管理工具。支持历史搜索、置顶项目和快速粘贴快捷键。',
+    tags: ['Windows', 'C++', 'Qt Framework', '桌面应用'],
+    icon: '⌨️',
+    platform: 'desktop',
+    year: '2024'
+  }
+];
+
+const socialLinks: SocialLink[] = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com',
+    icon: <GithubIcon className="w-5 h-5" />,
+    username: 'Vectorking-50kg',
+    hoverColor: 'hover:text-[#333] dark:hover:text-white' // GitHub black/white
+  },
+  {
+    name: 'Gitee',
+    url: 'https://gitee.com',
+    icon: <GiteeIcon className="w-5 h-5" />,
+    username: 'Vectorking-50kg',
+    hoverColor: 'hover:text-[#C71D23]'
+  },
+  {
+    name: 'Wechat',
+    url: '#',
+    icon: <WechatIcon className="w-5 h-5" />, // Adjusted size
+    username: 'vectorking50kg',
+    hoverColor: 'hover:text-[#07C160]'
+  },
+  {
+    name: 'Weibo',
+    url: '#',
+    icon: <WeiboIcon className="w-5 h-5" />, // Adjusted size
+    username: 'vectorking50kg',
+    hoverColor: 'hover:text-[#E6162D]'
+  },
+  {
+    name: '小红书',
+    url: '#',
+    icon: <XiaoHongShuIcon className="w-10 h-10" />, // Adjusted size
+    username: 'vectorking50kg',
+    hoverColor: 'hover:text-[#FF2442]'
+  }
+];
+
+// --- Main Component ---
+
+function App() {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <div className="w-full flex flex-col transition-colors duration-300 selection:bg-notion-gray/30 bg-notion-light dark:bg-notion-dark text-notion-text dark:text-notion-darkText">
+
+      {/* --- SCREEN 1: HERO --- */}
+      <section className="snap-start min-h-screen w-full flex flex-col items-center justify-center relative px-6 md:px-12">
+        <div className="w-full max-w-3xl flex flex-col h-full min-h-screen">
+          {/* Nav */}
+          <nav className="w-full py-8 flex justify-between items-center shrink-0">
+            <div className="flex items-center gap-2 text-notion-text dark:text-notion-darkText font-mono text-sm font-bold">
+              <div className="w-20 h-6 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center rounded-sm">CtrlCV</div>
+              <span>.FUN</span>
+            </div>
+            <ThemeToggle />
+          </nav>
+
+          {/* Hero Content - Centered Vertically */}
+          <div className="flex-1 flex flex-col justify-center gap-12 pb-20">
+            <div className="flex flex-col gap-6 items-start">
+              {/* Avatar with "sketchy" border radius */}
+              <div className="relative group">
+                <div className="w-28 h-28 md:w-32 md:h-32 overflow-hidden rounded-[40%_60%_70%_30%/40%_50%_60%_50%] border-2 border-notion-border dark:border-notion-darkBorder shadow-sm transition-all duration-500 group-hover:border-notion-gray bg-white dark:bg-[#252525]">
+                  <img
+                    src="https://picsum.photos/200/200?grayscale"
+                    alt="Profile"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 bg-white dark:bg-[#202020] border border-notion-border dark:border-notion-darkBorder px-2 py-0.5 rounded-full text-[10px] font-mono text-notion-gray">
+                  UTC. 2025
+                </div>
+              </div>
+
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-notion-text dark:text-notion-darkText mb-4 tracking-tight">
+                  独立开发者
+                </h1>
+                <p className="text-lg text-notion-text dark:text-notion-darkText/80 leading-relaxed max-w-xl">
+                  构建提升效率和生活质量的数字工具。
+                  专注于极简设计和本地优先原则。
+                  <span className="font-semibold">所订</span>、<span className="font-semibold">拾碎</span> 和 <span className="font-semibold">CtrlCV</span> 的创作者。
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-6">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-2 text-notion-gray transition-colors ${link.hoverColor || 'hover:text-notion-text dark:hover:text-notion-darkText'}`}
+                    title={link.name}
+                  >
+                    <span className="currentColor">{link.icon}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Heatmap */}
+            <div className="w-full pt-4">
+              <GitHubHeatmap />
+            </div>
+          </div>
+
+          {/* Scroll Hint */}
+          <div className="absolute bottom-8 left-0 w-full flex justify-center animate-bounce cursor-pointer z-10" onClick={() => scrollToSection('projects-section')}>
+            <ChevronDown className="text-notion-gray opacity-50 hover:opacity-100 transition-opacity" size={24} />
+          </div>
+        </div>
+      </section>
+
+
+      {/* --- SCREEN 2: PROJECTS --- */}
+      <section id="projects-section" className="snap-start min-h-screen w-full bg-gray-50 dark:bg-[#141414] border-y border-transparent md:border-notion-border/30 dark:md:border-notion-darkBorder/30 flex flex-col items-center justify-center py-20 relative">
+        <div className="w-full max-w-5xl px-6 md:px-12">
+          <div className="mb-12 flex items-center gap-3">
+            <div className="p-2 bg-white dark:bg-[#202020] rounded-lg border border-notion-border/50 dark:border-notion-darkBorder/50 shadow-sm">
+              <Layers size={24} className="text-notion-text dark:text-notion-darkText" />
+            </div>
+            <h2 className="text-3xl font-bold text-notion-text dark:text-notion-darkText">精选作品</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Hint */}
+        <div className="absolute bottom-8 left-0 w-full flex justify-center animate-bounce cursor-pointer" onClick={() => scrollToSection('tech-section')}>
+          <ChevronDown className="text-notion-gray opacity-50 hover:opacity-100 transition-opacity" size={24} />
+        </div>
+      </section>
+
+
+      {/* --- SCREEN 3: TECH STACK & FOOTER --- */}
+      <section id="tech-section" className="snap-start min-h-screen w-full flex flex-col items-center justify-between relative bg-notion-light dark:bg-notion-dark">
+        {/* Empty div for spacing/flex balance if needed, or just utilize justify-between to push footer down */}
+        <div className="w-full h-8 shrink-0"></div>
+
+        <div className="w-full max-w-4xl px-6 md:px-12 flex-1 flex flex-col justify-center py-12">
+          <div className="w-full">
+            <div className="mb-12 flex items-center gap-3">
+              <div className="p-2 bg-gray-100 dark:bg-[#252525] rounded-lg">
+                <Cpu size={24} className="text-notion-text dark:text-notion-darkText" />
+              </div>
+              <h2 className="text-3xl font-bold text-notion-text dark:text-notion-darkText">技术栈</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">前端 & Web</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['React', 'TypeScript', 'Tailwind CSS', 'Next.js'].map(t => (
+                      <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">移动端</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['Kotlin', 'Jetpack Compose', 'WeChat Mini Prog', 'Android SDK'].map(t => (
+                      <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">桌面端</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['C++', 'Qt Framework', 'Electron', 'Rust (Basic)'].map(t => (
+                      <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">工具</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['Git', 'Figma', 'Notion', 'VS Code'].map(t => (
+                      <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer className="w-full max-w-4xl px-6 md:px-12 py-8 border-t border-notion-border dark:border-notion-darkBorder flex flex-col md:flex-row justify-between items-center text-xs text-notion-gray gap-4 shrink-0 mb-4">
+          <div className="flex flex-col md:flex-row items-center gap-2">
+            <span>© {new Date().getFullYear()} CtrlCV.fun</span>
+            <span className="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
+            <span>保留所有权利.</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-1"><MapPin size={12} /> 中国，北京</span>
+            <a href="mailto:ctrlcv.fun@gmail.com" className="flex items-center gap-1 hover:text-notion-text dark:hover:text-notion-darkText transition-colors"><Mail size={12} /> 联系我</a>
+          </div>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
+export default App;
