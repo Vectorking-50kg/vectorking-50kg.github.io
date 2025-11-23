@@ -122,14 +122,14 @@ const socialLinks: SocialLink[] = [
     url: 'https://store.steampowered.com/',
     icon: <SteamIcon className="w-5 h-5" />, // Adjusted size
     username: 'vectorking50kg',
-    hoverColor: 'hover:text-[#000000]'
+    hoverColor: 'hover:text-[#000000] dark:hover:text-white'
   },
   {
     name: 'Epic Games',
     url: 'https://www.epicgames.com/',
     icon: <EpicGamesIcon className="w-5 h-5" />, // Adjusted size
     username: 'vectorking50kg',
-    hoverColor: 'hover:text-[#313131]'
+    hoverColor: 'hover:text-[#313131] dark:hover:text-white'
   }
 ];
 
@@ -142,80 +142,110 @@ function App() {
   };
 
   return (
-    <div className="w-full flex flex-col transition-colors duration-300 selection:bg-notion-gray/30 bg-notion-light dark:bg-notion-dark text-notion-text dark:text-notion-darkText">
+    <div className="w-full flex flex-col transition-colors duration-300 selection:bg-notion-gray/30 bg-notion-light dark:bg-notion-dark text-notion-text dark:text-notion-darkText relative">
+      
+      {/* Global Background Decorations (Fixed) */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-purple-200/40 dark:bg-purple-900/20 rounded-full blur-[80px] mix-blend-multiply dark:mix-blend-screen animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-200/40 dark:bg-blue-900/20 rounded-full blur-[80px] mix-blend-multiply dark:mix-blend-screen" />
+      </div>
 
       {/* --- SCREEN 1: HERO --- */}
-      <section className="snap-start min-h-screen w-full flex flex-col items-center justify-center relative px-6 md:px-12">
-        <div className="w-full max-w-3xl flex flex-col h-full min-h-screen">
+      <section className="snap-start min-h-screen w-full flex flex-col relative z-10">
+        
+        <div className="w-full max-w-6xl mx-auto px-6 md:px-12 flex flex-col h-full min-h-screen">
           {/* Nav */}
           <nav className="w-full py-8 flex justify-between items-center shrink-0">
-            <div className="flex items-center gap-2 text-notion-text dark:text-notion-darkText font-mono text-sm font-bold">
-              <div className="w-20 h-6 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center rounded-sm">CtrlCV</div>
+            <div className="flex items-center gap-2 text-notion-text dark:text-notion-darkText font-mono text-sm font-bold select-none">
+              <div className="w-20 h-6 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center rounded-sm shadow-md">CtrlCV</div>
               <span>.FUN</span>
             </div>
             <ThemeToggle />
           </nav>
 
-          {/* Hero Content - Centered Vertically */}
-          <div className="flex-1 flex flex-col justify-center gap-12 pb-20">
-            <div className="flex flex-col gap-6 items-start">
-              {/* Avatar with "sketchy" border radius */}
-              <div className="relative group">
-                <div className="w-28 h-28 md:w-32 md:h-32 overflow-hidden rounded-[40%_60%_70%_30%/40%_50%_60%_50%] border-2 border-notion-border dark:border-notion-darkBorder shadow-sm transition-all duration-500 group-hover:border-notion-gray bg-white dark:bg-[#252525]">
+          {/* Hero Content */}
+          <div className="flex-1 flex flex-col justify-center gap-8 md:gap-16 pb-12">
+            
+            <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12">
+              {/* Left: Text Info */}
+              <div className="flex-1 flex flex-col gap-6 items-center md:items-start text-center md:text-left">
+                
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-notion-gray/5 border border-notion-gray/20 text-notion-gray text-xs md:text-sm font-mono mb-2 backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Available for interesting projects
+                  </div>
+                  
+                  <h1 className="font-bold text-notion-text dark:text-notion-darkText tracking-tight leading-tight">
+                    <span className="block text-lg md:text-2xl font-medium text-notion-gray mb-1">Hi, I'm</span>
+                    <span className="font-chinese-serif block text-5xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 pb-2 -ml-1 md:-ml-2">
+                      甲骨水滴 👋
+                    </span>
+                  </h1>
+                </div>
+
+                <p className="text-lg md:text-xl text-notion-text/80 dark:text-notion-darkText/80 leading-relaxed max-w-xl font-bold">
+                  🌖 熬夜写代码市级选手 | 🧑🏻‍💻 AI 善后高级工程师
+                  <br className="hidden md:block" />
+                  <span className="text-base md:text-lg text-notion-gray mt-2 block font-light">
+                    倾心于构建优雅的数字产品，努力成为优秀的独立开发者。
+                    <br />
+                    热爱游戏，但经常买来不玩；喜欢听歌，但听歌的时候写不出代码。
+                  </span>
+                </p>
+
+                {/* Social Links */}
+                <div className="flex flex-wrap gap-6 justify-center md:justify-start mt-2">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-2 text-notion-gray transition-colors ${link.hoverColor || 'hover:text-notion-text dark:hover:text-notion-darkText'}`}
+                      title={link.name}
+                    >
+                      <span className="currentColor">{link.icon}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right: Avatar */}
+              <div className="shrink-0 relative group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] blur-2xl transform group-hover:scale-110 transition-transform duration-700"></div>
+                <div className="relative w-40 h-40 md:w-64 md:h-64 overflow-hidden rounded-[40%_60%_70%_30%/40%_50%_60%_50%] border-2 border-white/50 dark:border-white/10 shadow-xl bg-white dark:bg-[#252525] transition-all duration-500 group-hover:rotate-3">
                   <img
-                    src="https://picsum.photos/200/200?grayscale"
+                    src="/avatar.jpg"
                     alt="Profile"
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-white dark:bg-[#202020] border border-notion-border dark:border-notion-darkBorder px-2 py-0.5 rounded-full text-[10px] font-mono text-notion-gray">
-                  UTC. 2025
+                <div className="absolute -bottom-2 -right-2 bg-white/80 dark:bg-[#202020]/80 backdrop-blur-md border border-white/20 dark:border-white/10 px-3 py-1 rounded-full text-xs font-mono text-notion-gray shadow-lg">
+                  Coding. {new Date().getFullYear()}
                 </div>
-              </div>
-
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-notion-text dark:text-notion-darkText mb-4 tracking-tight">
-                  独立开发者
-                </h1>
-                <p className="text-lg text-notion-text dark:text-notion-darkText/80 leading-relaxed max-w-xl">
-                  构建提升效率和生活质量的数字工具。
-                  专注于极简设计和本地优先原则。
-                  <span className="font-semibold">所订</span>、<span className="font-semibold">拾碎</span> 和 <span className="font-semibold">CtrlCV</span> 的创作者。
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-6">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center gap-2 text-notion-gray transition-colors ${link.hoverColor || 'hover:text-notion-text dark:hover:text-notion-darkText'}`}
-                    title={link.name}
-                  >
-                    <span className="currentColor">{link.icon}</span>
-                  </a>
-                ))}
               </div>
             </div>
 
-            {/* Heatmap */}
-            <div className="w-full pt-4">
+            {/* Heatmap - Bottom of Hero */}
+            <div className="w-full pt-4 opacity-80 hover:opacity-100 transition-opacity duration-500">
               <GitHubHeatmap />
             </div>
           </div>
 
           {/* Scroll Hint */}
-          <div className="absolute bottom-8 left-0 w-full flex justify-center animate-bounce cursor-pointer z-10" onClick={() => scrollToSection('projects-section')}>
-            <ChevronDown className="text-notion-gray opacity-50 hover:opacity-100 transition-opacity" size={24} />
+          <div className="absolute bottom-8 left-0 w-full flex justify-center animate-bounce cursor-pointer z-20" onClick={() => scrollToSection('projects-section')}>
+            <ChevronDown className="text-notion-gray/50 hover:text-notion-gray transition-colors" size={24} />
           </div>
         </div>
       </section>
 
 
       {/* --- SCREEN 2: PROJECTS --- */}
-      <section id="projects-section" className="snap-start min-h-screen w-full bg-gray-50 dark:bg-[#141414] border-y border-transparent md:border-notion-border/30 dark:md:border-notion-darkBorder/30 flex flex-col items-center justify-center py-20 relative">
+      <section id="projects-section" className="snap-start min-h-screen w-full flex flex-col items-center justify-center py-20 relative z-10">
         <div className="w-full max-w-5xl px-6 md:px-12">
           <div className="mb-12 flex items-center gap-3">
             <div className="p-2 bg-white dark:bg-[#202020] rounded-lg border border-notion-border/50 dark:border-notion-darkBorder/50 shadow-sm">
@@ -239,7 +269,7 @@ function App() {
 
 
       {/* --- SCREEN 3: TECH STACK & FOOTER --- */}
-      <section id="tech-section" className="snap-start min-h-screen w-full flex flex-col items-center justify-between relative bg-notion-light dark:bg-notion-dark">
+      <section id="tech-section" className="snap-start min-h-screen w-full flex flex-col items-center justify-between relative z-10 bg-transparent">
         {/* Empty div for spacing/flex balance if needed, or just utilize justify-between to push footer down */}
         <div className="w-full h-8 shrink-0"></div>
 

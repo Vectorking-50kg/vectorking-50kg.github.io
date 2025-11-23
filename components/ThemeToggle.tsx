@@ -1,24 +1,64 @@
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Monitor } from 'lucide-react';
+
+type Theme = 'light' | 'dark' | 'system';
 
 const ThemeToggle: React.FC = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light') return stored;
+    }
+    return 'system';
+  });
 
   useEffect(() => {
-    // Check system preference on mount
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
+    const root = document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applySystem = (e?: MediaQueryListEvent | MediaQueryList) => {
+      const isSystemDark = e ? e.matches : mediaQuery.matches;
+      if (isSystemDark) root.classList.add('dark');
+      else root.classList.remove('dark');
+    };
+
+    switch (theme) {
+      case 'dark':
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        break;
+      case 'light':
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        break;
+      case 'system':
+        localStorage.removeItem('theme');
+        applySystem();
+        const listener = (e: MediaQueryListEvent) => applySystem(e);
+        mediaQuery.addEventListener('change', listener);
+        return () => mediaQuery.removeEventListener('change', listener);
     }
-  }, []);
+  }, [theme]);
 
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
+    if (theme === 'light') setTheme('dark');
+    else if (theme === 'dark') setTheme('system');
+    else setTheme('light');
+  };
+
+  const getIcon = () => {
+    switch (theme) {
+      case 'light': return <Sun size={20} />;
+      case 'dark': return <Moon size={20} />;
+      case 'system': return <Monitor size={20} />;
+    }
+  };
+
+  const getLabel = () => {
+    switch (theme) {
+      case 'light': return '浅色模式';
+      case 'dark': return '深色模式';
+      case 'system': return '跟随系统';
     }
   };
 
@@ -26,9 +66,10 @@ const ThemeToggle: React.FC = () => {
     <button
       onClick={toggleTheme}
       className="p-2 rounded-md hover:bg-notion-hover dark:hover:bg-notion-darkHover transition-colors text-notion-text dark:text-notion-darkText"
-      aria-label="Toggle Dark Mode"
+      title={`${getLabel()}`}
+      aria-label="Toggle Theme"
     >
-      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      {getIcon()}
     </button>
   );
 };

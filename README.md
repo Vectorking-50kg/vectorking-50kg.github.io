@@ -1,4 +1,4 @@
-# CtrlCV.FUN - 独立开发者作品集
+# CtrlCV.FUN - 甲骨水滴的个人主页
 
 一个采用 Notion 极简风格设计的个人开发者作品集网站，用于展示个人项目、技术栈及开发动态。
 
@@ -9,7 +9,7 @@
 *   **Notion 风格 UI**: 干净、极简的设计语言，注重内容阅读体验。
 *   **深色/浅色模式**: 内置主题切换功能，自动适配系统偏好或手动切换。
 *   **响应式设计**: 完美适配移动端和桌面端设备。
-*   **项目展示**: 优雅的卡片布局展示个人作品（所订、拾碎、CtrlCV 等）。
+*   **项目展示**: 优雅的卡片布局展示个人作品。
 *   **GitHub 热力图**: 集成 GitHub 贡献图表，展示编码活跃度。
 *   **技术栈展示**: 清晰分类的前端、移动端及桌面端技能树。
 
@@ -76,7 +76,6 @@ npm run deploy
 
 **Vectorking-50kg**
 
-*   专注于构建提升效率和生活质量的数字工具。
 *   Email: [ctrlcv.fun@gmail.com](mailto:ctrlcv.fun@gmail.com)
 *   GitHub: [@Vectorking-50kg](https://github.com/Vectorking-50kg)
 
