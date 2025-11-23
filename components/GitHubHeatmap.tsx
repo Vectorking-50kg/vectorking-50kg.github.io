@@ -68,7 +68,7 @@ const GitHubHeatmap: React.FC = () => {
                 {week.map((day) => (
                     <div
                       key={day.date}
-                      className={`w-[10px] h-[10px] md:w-full md:aspect-square rounded-[1px] md:rounded-[2px] ${getColor(day.count)} transition-colors hover:ring-1 hover:ring-notion-gray/50`}
+                      className={`w-[10px] h-[10px] md:w-full md:h-auto md:aspect-square rounded-[1px] md:rounded-[2px] ${getColor(day.count)} transition-colors hover:ring-1 hover:ring-notion-gray/50`}
                       title={`${day.date}: ${day.count} contributions`}
                     />
                 ))}
