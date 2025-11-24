@@ -188,12 +188,12 @@ function App() {
                 </div>
 
                 <p className="text-lg md:text-xl text-notion-text/80 dark:text-notion-darkText/80 leading-relaxed max-w-xl font-bold">
-                  🌖 熬夜写代码市级选手 | 🧑🏻‍💻 AI 善后高级工程师
+                  🌖 熬夜写代码市级选手 | 🧑🏻‍💻 AI 善后工程师
                   <br className="hidden md:block" />
                   <span className="text-base md:text-lg text-notion-gray mt-2 block font-light">
-                    倾心于构建优雅的数字产品，努力成为优秀的独立开发者。
+                    热衷于构建优雅的数字产品，希望成为优秀的独立开发者。
                     <br />
-                    热爱游戏，但经常买来不玩；喜欢听歌，但听歌的时候写不出代码。
+                    热爱游戏，但买的多玩的少；喜欢听歌，但一听歌就没法写代码。
                   </span>
                 </p>
 
@@ -328,7 +328,7 @@ function App() {
           <div className="flex flex-col md:flex-row items-center gap-2">
             <span>© {new Date().getFullYear()} CtrlCV.fun</span>
             <span className="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
-            <span>保留所有权利.</span>
+            <span>保留所有权利</span>
           </div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1"><MapPin size={12} /> 中国，北京</span>
