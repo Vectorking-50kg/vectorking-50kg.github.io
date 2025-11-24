@@ -54,30 +54,30 @@ const EpicGamesIcon = ({ className }: { className?: string }) => (
 const projects: Project[] = [
   {
     id: '1',
-    title: '所订 (SuoDing)',
-    description: '一款用于管理个人订阅服务的微信小程序。帮助用户追踪扣费周期，可视化支出统计，并接收续费提醒。',
-    tags: ['微信小程序', 'JavaScript', '云开发', 'UI/UX'],
-    icon: '📅',
+    title: '所订 (SubAll)',
+    description: '一款帮助用户管理各种数字订阅服务的微信小程序，提供支出统计、续费提醒和历史记录等功能。',
+    tags: ['TDesign组件库', 'TypeScript', 'Less', '本地存储', '玻璃拟态设计'],
+    icon: '🗓️',
     platform: 'mobile',
-    year: '2023'
+    miniDescription: '微信小程序'
   },
   {
     id: '2',
     title: '拾碎 (LifeBits)',
-    description: '一款 Android 应用，用于离线内容收集。允许用户保存其他应用中的片段，并在本地创建包含文本、图片和录音的个人备忘录。',
-    tags: ['Android', 'Kotlin', 'Jetpack Compose', '本地数据库'],
-    icon: '🧩',
+    description: '一款剪藏应用，支持主流 App 和各种网页链接的内容收集，离线存储，数据永不丢失。同时允许用户随时随地保存自己的想法，支持文本、图片、录音。',
+    tags: ['Kotlin', 'Jetpack Compose', 'Material Design 3', 'WebDAV', '离线存储'],
+    icon: '📱',
     platform: 'mobile',
-    year: '2023'
+    miniDescription: 'Android 应用'
   },
   {
     id: '3',
     title: 'CtrlCV',
-    description: '基于 Qt 构建的 Windows 轻量级剪贴板管理工具。支持历史搜索、置顶项目和快速粘贴快捷键。',
-    tags: ['Windows', 'C++', 'Qt Framework', '桌面应用'],
-    icon: '⌨️',
+    description: '基于 PySide6 构建的 Windows 轻量级剪贴板管理工具。支持历史搜索、批量粘贴和自定义快捷键等功能。',
+    tags: ['Python', 'PySide6', 'Qt Framework', '桌面应用', '本地数据库'],
+    icon: '📋',
     platform: 'desktop',
-    year: '2024'
+    miniDescription: 'Windows 应用'
   }
 ];
 
@@ -188,12 +188,12 @@ function App() {
                 </div>
 
                 <p className="text-lg md:text-xl text-notion-text/80 dark:text-notion-darkText/80 leading-relaxed max-w-xl font-bold">
-                  🌖 熬夜写代码市级选手 | 🧑🏻‍💻 AI 善后工程师
+                  🌖 熬夜写代码一级选手 | 🧑🏻‍💻 AI 善后工程师
                   <br className="hidden md:block" />
                   <span className="text-base md:text-lg text-notion-gray mt-2 block font-light">
                     热衷于构建优雅的数字产品，希望成为优秀的独立开发者。
                     <br />
-                    热爱游戏，但买的多玩的少；喜欢听歌，但一听歌就没法写代码。
+                    热爱游戏，不过买的多玩的少；喜欢听歌，但一听歌就写不出代码。
                   </span>
                 </p>
 
@@ -251,7 +251,7 @@ function App() {
             <div className="p-2 bg-white dark:bg-[#202020] rounded-lg border border-notion-border/50 dark:border-notion-darkBorder/50 shadow-sm">
               <Layers size={24} className="text-notion-text dark:text-notion-darkText" />
             </div>
-            <h2 className="text-3xl font-bold text-notion-text dark:text-notion-darkText">精选作品</h2>
+            <h2 className="text-3xl font-bold text-notion-text dark:text-notion-darkText">作品集</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -287,7 +287,7 @@ function App() {
                 <div>
                   <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">前端 & Web</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['React', 'TypeScript', 'Tailwind CSS', 'Next.js'].map(t => (
+                    {['React', 'TypeScript', 'Less', 'Tailwind CSS', 'Vite', 'Ant Design'].map(t => (
                       <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
                     ))}
                   </div>
@@ -295,7 +295,7 @@ function App() {
                 <div>
                   <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">移动端</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['Kotlin', 'Jetpack Compose', 'WeChat Mini Prog', 'Android SDK'].map(t => (
+                    {['Java', 'Kotlin', 'Jetpack Compose', 'Material Design 3', '微信小程序'].map(t => (
                       <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
                     ))}
                   </div>
@@ -306,7 +306,7 @@ function App() {
                 <div>
                   <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">桌面端</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['C++', 'Qt Framework', 'Electron', 'Rust (Basic)'].map(t => (
+                    {['C/C++', 'Python', 'PySide6', 'Qt Framework', 'SQLite', 'PyInstaller'].map(t => (
                       <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
                     ))}
                   </div>
@@ -314,7 +314,7 @@ function App() {
                 <div>
                   <h3 className="text-sm font-mono text-notion-gray uppercase tracking-widest mb-3 border-b border-notion-border dark:border-notion-darkBorder pb-2">工具</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['Git', 'Figma', 'Notion', 'VS Code'].map(t => (
+                    {['Git', 'Figma', 'Cursor', 'Android Studio'].map(t => (
                       <span key={t} className="px-3 py-1 bg-gray-50 dark:bg-[#202020] rounded border border-notion-border dark:border-notion-darkBorder text-sm text-notion-text dark:text-notion-darkText/90">{t}</span>
                     ))}
                   </div>

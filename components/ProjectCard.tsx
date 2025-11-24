@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               {project.title}
             </h3>
             <span className="text-xs text-notion-gray font-mono">
-              {project.year}
+              {project.miniDescription}
             </span>
           </div>
         </div>

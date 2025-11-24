@@ -6,7 +6,7 @@ export interface Project {
   link?: string;
   icon: string; // Emoji or image URL
   platform: 'mobile' | 'desktop' | 'web';
-  year: string;
+  miniDescription: string;
 }
 
 export interface SocialLink {
